@@ -14,6 +14,10 @@ client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`)
 })
 
+client.on("message", (message) => {
+    console.log(message)
+})
+
 //=============COMMANDS=================
 
 client.commands = new Collection();
