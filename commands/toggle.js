@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-
 const fs = require('fs');
 const path = require('path')
 
@@ -20,18 +19,25 @@ module.exports = {
                 .setAutocomplete(true),
         ),
     async autocomplete(interaction) {
-        const option = interaction.options.getFocused(true);
-        let choices = ['User', 'Channel']
-        let filtered = choices.filter(choice => choice.startsWith(option.value));
+        const option = interaction.options.getFocused();
+        let choices = ['user', 'channel']
+        userConfig[option] = [true, "", "EN"];
+        let filtered = choices.filter(choice => choice.startsWith(option));
+        fs.writeFile(path.join(__dirname,userConfigName), JSON.stringify(userConfig, null, 2), async function writeJSON(err) {
+            if (err) return console.log(err);
+            console.log(JSON.stringify(userConfig, null ,2));
+            await interaction.reply(`Toggled User to ${userConfig[user][0]}!`);
+        });
         await interaction.respond(
             filtered.map(choice => ({ name: choice, value: choice })),
         );
     },
     async execute(interaction) {
+        console.log(interaction)
         let type = interaction.options.getString('type').toLowerCase();
         let user = interaction.member.id;
-        let channel = interaction.options.getChannel('target');
-        let server = interaction.guild;
+        let channel = interaction.channel.id;
+        let server = interaction.guild.id;
 
         switch (type) {
             case "user":
@@ -47,11 +53,16 @@ module.exports = {
                 });
                 break;
             case "channel":
-                let toggled = channelConfig[server].includes(channel);
-                if(toggled) {
-                    channelConfig[server] = channelConfig[server].filter(cid => cid != channel); 
+                let toggled = true;
+                if(channelConfig.hasOwnProperty(server)) {
+                    toggled = channelConfig[server].includes(channel);
+                    if(toggled) {
+                        channelConfig[server] = channelConfig[server].filter(cid => cid != channel); 
+                    } else {
+                        channelConfig[server].push(channel);
+                    }
                 } else {
-                    channelConfig[server].push(channel);
+                    channelConfig[server] = [channel];
                 }
                 fs.writeFile(path.join(__dirname,channelConfigName), JSON.stringify(channelConfig, null, 2), async function writeJSON(err) {
                     if (err) return console.log(err);
