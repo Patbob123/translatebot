@@ -34,7 +34,11 @@ module.exports = {
 
         switch (type) {
             case "user":
-                userConfig[user][0] = !userConfig[user][0]; 
+                if(userConfig.hasOwnProperty(user)) {
+                    userConfig[user][0] = !userConfig[user][0]; 
+                } else {
+                    userConfig[user] = [true, "", "EN"];
+                }
                 fs.writeFile(userConfigName, JSON.stringify(userConfig, null, 2), async function writeJSON(err) {
                     if (err) return console.log(err);
                     console.log(JSON.stringify(userConfig, null ,2));
