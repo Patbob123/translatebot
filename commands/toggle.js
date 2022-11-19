@@ -1,12 +1,13 @@
 const { SlashCommandBuilder } = require('discord.js');
-const fs = require('fs');
 
+const fs = require('fs');
+const path = require('path')
 
 const userConfigName = '../config/userConfig.json';
 const channelConfigName = '../config/channelConfig.json';
 
-let userConfig = require(userConfigName);
-let channelConfig = require(channelConfigName);
+let userConfig = JSON.parse(fs.readFileSync(path.join(__dirname,userConfigName), 'utf8'))
+let channelConfig = JSON.parse(fs.readFileSync(path.join(__dirname,channelConfigName), 'utf8'))
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -28,7 +29,7 @@ module.exports = {
     },
     async execute(interaction) {
         let type = interaction.options.getString('type').toLowerCase();
-        let user = interaction.options.getUser('target');
+        let user = interaction.options.member.id;
         let channel = interaction.options.getChannel('target');
         let server = interaction.guild;
 
@@ -39,7 +40,7 @@ module.exports = {
                 } else {
                     userConfig[user] = [true, "", "EN"];
                 }
-                fs.writeFile(userConfigName, JSON.stringify(userConfig, null, 2), async function writeJSON(err) {
+                fs.writeFile(path.join(__dirname,userConfigName), JSON.stringify(userConfig, null, 2), async function writeJSON(err) {
                     if (err) return console.log(err);
                     console.log(JSON.stringify(userConfig, null ,2));
                     await interaction.reply(`Toggled User to ${userConfig[user][0]}!`);
@@ -52,7 +53,7 @@ module.exports = {
                 } else {
                     channelConfig[server].push(channel);
                 }
-                fs.writeFile(channelConfigName, JSON.stringify(channelConfig, null, 2), async function writeJSON(err) {
+                fs.writeFile(path.join(__dirname,channelConfigName), JSON.stringify(channelConfig, null, 2), async function writeJSON(err) {
                     if (err) return console.log(err);
                     console.log(JSON.stringify(channelConfig, null ,2));
                     await interaction.reply(`Toggled Channel to ${toggled}!`);
