@@ -21,13 +21,7 @@ module.exports = {
     async autocomplete(interaction) {
         const option = interaction.options.getFocused();
         let choices = ['user', 'channel']
-        userConfig[option] = [true, "", "EN"];
         let filtered = choices.filter(choice => choice.startsWith(option));
-        fs.writeFile(path.join(__dirname,userConfigName), JSON.stringify(userConfig, null, 2), async function writeJSON(err) {
-            if (err) return console.log(err);
-            console.log(JSON.stringify(userConfig, null ,2));
-            await interaction.reply(`Toggled User to ${userConfig[user][0]}!`);
-        });
         await interaction.respond(
             filtered.map(choice => ({ name: choice, value: choice })),
         );
