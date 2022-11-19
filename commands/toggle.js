@@ -16,7 +16,7 @@ module.exports = {
         .addStringOption((type) =>
             type.setName('type')
                 .setDescription('User or Channel')
-                .setRequired(false)
+                .setRequired(true)
                 .setAutocomplete(true),
         ),
     async autocomplete(interaction) {
@@ -29,7 +29,7 @@ module.exports = {
     },
     async execute(interaction) {
         let type = interaction.options.getString('type').toLowerCase();
-        let user = interaction.options.member.id;
+        let user = interaction.member.id;
         let channel = interaction.options.getChannel('target');
         let server = interaction.guild;
 
