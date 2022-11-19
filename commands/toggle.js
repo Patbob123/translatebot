@@ -27,7 +27,6 @@ module.exports = {
         );
     },
     async execute(interaction) {
-        console.log(interaction)
         let type = interaction.options.getString('type').toLowerCase();
         let user = interaction.member.id;
         let channel = interaction.channel.id;
@@ -42,7 +41,6 @@ module.exports = {
                 }
                 fs.writeFile(path.join(__dirname,userConfigName), JSON.stringify(userConfig, null, 2), async function writeJSON(err) {
                     if (err) return console.log(err);
-                    console.log(JSON.stringify(userConfig, null ,2));
                     await interaction.reply(`Toggled User to ${userConfig[user][0]}!`);
                 });
                 break;
@@ -60,7 +58,6 @@ module.exports = {
                 }
                 fs.writeFile(path.join(__dirname,channelConfigName), JSON.stringify(channelConfig, null, 2), async function writeJSON(err) {
                     if (err) return console.log(err);
-                    console.log(JSON.stringify(channelConfig, null ,2));
                     await interaction.reply(`Toggled Channel to ${toggled}!`);
                 });
 
