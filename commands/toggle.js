@@ -1,12 +1,13 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
+const path = require('path')
 
+const userConfig = path.join(__dirname, 'config/userConfig.json');
+const userConfigName = '/config/userConfig.json';
+//const channelConfigName = 'C:\Users\Lenovo\Desktop\code folter\blackfactsbot\config\userConfig.json';
 
-const userConfigName = '../config/userConfig.json';
-const channelConfigName = '../config/channelConfig.json';
-
-let userConfig = require(userConfigName);
-let channelConfig = require(channelConfigName);
+//let userConfig = JSON.parse(fs.readFileSync(userConfigName, 'utf-8'));
+//let channelConfig = require(channelConfigName);
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,7 +16,7 @@ module.exports = {
         .addStringOption((type) =>
             type.setName('type')
                 .setDescription('User or Channel')
-                .setRequired(false)
+                .setRequired(true)
                 .setAutocomplete(true),
         ),
     async autocomplete(interaction) {
@@ -28,7 +29,7 @@ module.exports = {
     },
     async execute(interaction) {
         let type = interaction.options.getString('type').toLowerCase();
-        let user = interaction.options.getUser('target');
+        let user = interaction.member.id;
         let channel = interaction.options.getChannel('target');
         let server = interaction.guild;
 
