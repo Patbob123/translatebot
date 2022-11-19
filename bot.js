@@ -10,11 +10,8 @@ const client = new Client({
         GatewayIntentBits.GuildMembers
     ] });
 
-client.on("ready", () => {
-    console.log(`Logged in as ${client.user.tag}!`)
-})
 
-client.on("message", (message) => {
+client.on("message", async (message) => {
     console.log(message)
 })
 
