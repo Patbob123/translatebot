@@ -38,10 +38,8 @@ module.exports = {
         console.log(definitionList.list[0].definition)
         let x = new EmbedBuilder()
             .setColor(0xb411fa)
-            .setTitle("Rhymes For " + (word.charAt(0).toUpperCase() + word.slice(1)))
-            .addFields(
-                { name: definitionList.list[0].definition, value: '​​​' }
-            )
+            .setTitle("Definition of " + (word.charAt(0).toUpperCase() + word.slice(1)))
+            .setDescription(definitionList.list[0].definition)
             .setTimestamp()
         await interaction.reply({ embeds: [x] });
     },

@@ -20,6 +20,7 @@ async function questionAndAnswers(interaction, madlib, index, answers) {
     let question = new EmbedBuilder()
         .setColor(0xb411fa)
         .setTitle(`Enter ${madlib.blanks[index]}!`)
+        .setFooter({ text: `${index+1} out of ${madlib.blanks.length}, !stop to stop`})
     await interaction.followUp({ embeds: [question], fetchReply: true })
         .then(() => {
             interaction.channel.awaitMessages({ filter, max: 1, time: 30000, errors: ['time'] })

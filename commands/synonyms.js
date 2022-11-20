@@ -32,7 +32,7 @@ module.exports = {
         });
         let synonyms = []
         for(let i in synonym) {
-            let words = synonym[i].synonyms
+            let words = synonym[i].syn
             for(let j = 0; j < Math.min(words.length,3); j++) {
                 synonyms.push(words[j].charAt(0).toUpperCase() + words[j].slice(1))
             }

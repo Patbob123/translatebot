@@ -5,8 +5,6 @@ const path = require('path')
 const userConfigName = '../config/userConfig.json';
 const channelConfigName = '../config/channelConfig.json';
 
-let userConfig = JSON.parse(fs.readFileSync(path.join(__dirname, userConfigName), 'utf8'))
-let channelConfig = JSON.parse(fs.readFileSync(path.join(__dirname, channelConfigName), 'utf8'))
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,6 +13,9 @@ module.exports = {
     ,
     async execute(interaction) {
         console.log(interaction)
+        let userConfig = JSON.parse(fs.readFileSync(path.join(__dirname, userConfigName), 'utf8'))
+        let channelConfig = JSON.parse(fs.readFileSync(path.join(__dirname, channelConfigName), 'utf8'))
+
         let userid = interaction.member.id;
         let channelid = interaction.channel.id;
         let serverid = interaction.guild.id;
