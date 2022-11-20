@@ -19,7 +19,6 @@ const client = new Client({
 	]
 });
 
-console.log(client)
 
 client.on("message", async (message) => {
 	console.log(message)
