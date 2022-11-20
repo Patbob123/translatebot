@@ -10,7 +10,7 @@ const langhash = languages.languagehash
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('language')
-        .setDescription('change langauage!')
+        .setDescription('Change langauage!')
         .addStringOption((option) =>
             option.setName('input')
                 .setDescription('What you say')
