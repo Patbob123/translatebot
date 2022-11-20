@@ -14,9 +14,10 @@ module.exports = {
     execute(client) {
         // console.log(client);
         if (client.author.bot) return
-
-        let userid = client.author.id
-        let userconfig = userConfig[userid]
+        
+        let user = client.author
+        console.log(client.author)
+        let userconfig = userConfig[user.id]
         let channelid = client.channelId
         let serverid = client.guildId
         let content = client.content
@@ -25,13 +26,17 @@ module.exports = {
         translateTxt(content, userconfig[1], userconfig[2]).then(res => {
             if(userconfig[1] == '') userconfig[1] = 'Default'
             let x = new EmbedBuilder()
-                .setColor(0x0099FF)
+                .setColor(0xb411fa)
                 .setTitle(res.translations[0].text)
+                .setAuthor({
+                    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    iconURL: client.author.displayAvatarURL(),
+                    name: client.author.username+':'
+                })
                 .setTimestamp()
-                .setFooter({ text: userconfig[1] + ' To ' + userconfig[2] });
-            // client.channel.send({ embeds: [translationEmbed] });
+                .setFooter({ text: userconfig[1] + ' To ' + userconfig[2] })
             client.channel.send({ embeds: [x] });
         })
-        console.log(userid, channelid, serverid, content)
+        console.log(channelid, serverid, content)
     },
 };

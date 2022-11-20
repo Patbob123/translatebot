@@ -7,10 +7,10 @@ let translateTxt = (text, inputlang, outputlang) => {
     let status = ''
     let params = {
         'text': text, //'你好嗎? 我要吃你的孩子。我可以嗎?',
-        'target_lang': 'EN'
+        'target_lang': outputlang
     }
 
-    if(inputlang != '') params['source_lang'] = outputlang;
+    if(inputlang != '') params['source_lang'] = inputlang;
 
     return fetch(API, {
         method: 'POST',
