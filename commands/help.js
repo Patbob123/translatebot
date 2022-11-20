@@ -17,6 +17,7 @@ module.exports = {
                 { name: '/define', value: 'Define a word', inline:true},
                 { name: '/pronounce', value: 'How to pronounce a word', inline:true},
                 { name: '/madlib', value: 'Start a madlib, !stop to stop', inline:true},
+                { name: '/paraphrase', value: 'Rewrites a sentence', inline:true},
                 { name: '/kanji', value: 'Descriptions for a kanji character'},
             )
             .setTimestamp()
