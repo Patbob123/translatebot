@@ -1,19 +1,18 @@
 require('dotenv').config()
 const path = require('path')
 const fs = require('fs')
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const client = new Client({
-	intents: [
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.GuildMembers
-	]
-});
+const { Client, Collection, GatewayIntentBits} = require('discord.js');
+const client = new Client({ 
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMembers
+    ] });
 
 
 client.on("message", async (message) => {
-	console.log(message)
+    console.log(message)
 })
 
 //=============COMMANDS=================
@@ -46,33 +45,17 @@ for (const file of eventFiles) {
 //=============INIT=================
 
 client.on('interactionCreate', async interaction => {
-	if (interaction.isChatInputCommand()) {
-		const command = interaction.client.commands.get(interaction.commandName);
-		if (!command) return;
+	if (!interaction.isChatInputCommand()) return;
 
-		try {
-			await command.execute(interaction);
-		} catch (error) {
-			console.error(error);
-			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-		}
+	const command = interaction.client.commands.get(interaction.commandName);
+	if (!command) return;
+
+	try {
+		await command.execute(interaction);
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
-	else if (interaction.isAutocomplete()) {
-		const command = interaction.client.commands.get(interaction.commandName);
-
-		if (!command) {
-			console.error(`No command matching ${interaction.commandName} was found.`);
-			return;
-		}
-
-		try {
-			await command.autocomplete(interaction);
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-
 });
 
 
