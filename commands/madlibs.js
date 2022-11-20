@@ -10,27 +10,27 @@ module.exports = {
     ,
     async execute(interaction) {
         let status = ''
-        let madlib = fetch(API, {
+        let getmadlib = (fetch(API, {
             method: 'GET',
         }).then(res => {
             status = res.status;
             return res.json();
         }).then(res => {
             if (status >= 400 && status <= 600) {
-                console.log("Error: ", res);
             } else {
-                console.log(res);
                 return res
             }
         }).catch(err => {
-            console.log(err)
-        });
+        })).then(res => console.log(res))
 
+        getmadlib.then(res => {
+            let madlib = res
+            let x = new EmbedBuilder()
+                .setColor(0x0099FF)
+                .setTitle(`Madlib ${madlib.title} started`)
+            await interaction.reply({ embeds: [x] });
+        })
 
-        let x = new EmbedBuilder()
-            .setColor(0x0099FF)
-            .setTitle(`Madlib ${madlib.title} Started`)
-        interaction.reply({ embeds: [x] });
 
     },
 };
