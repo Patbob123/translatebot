@@ -3,8 +3,6 @@ const fs = require('fs');
 const path = require('path')
 
 const userConfigName = '../config/userConfig.json';
-let userConfig = JSON.parse(fs.readFileSync(path.join(__dirname, userConfigName), 'utf8'))
-
 const languages = require("../utils/languages")
 const abre = languages.abbreviations
 const langhash = languages.languagehash
@@ -42,6 +40,8 @@ module.exports = {
 		);
     },
     async execute(interaction) {
+        let userConfig = JSON.parse(fs.readFileSync(path.join(__dirname, userConfigName), 'utf8'))
+
         let input = interaction.options.getString('input')
         let output = interaction.options.getString('output')
         let inputlang = input.length <= 2 ? input.toUpperCase() : langhash[input.toLowerCase()];
