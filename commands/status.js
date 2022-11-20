@@ -30,7 +30,7 @@ module.exports = {
                 iconURL: interaction.member.displayAvatarURL(),
                 name: interaction.user.username + ':'
             })
-        await interaction.channel.send({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed] });
 
     },
 };
