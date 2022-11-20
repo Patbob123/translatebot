@@ -1,21 +1,21 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const fetch = require('cross-fetch');
-const API = 'https://words.bighugelabs.com/api/2/' + '7e6c456cd4c60603c72f98e6747d3f5c';
+const API = 'https://rhymebrain.com/talk?function=getRhymes&word=';
 
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('synonym')
-        .setDescription('get synonym for word!')
+        .setName('rhyme')
+        .setDescription('get word that rhyme with another word!')
         .addStringOption((word) =>
             word.setName('word')
-                .setDescription('Returns a synonym for a given word!')
+                .setDescription('Returns a rhyme for a given word!')
                 .setRequired(true)
         ),
     async execute(interaction) {
         let word = interaction.options.getString('word')
         let status = ''
-        let synonym = await fetch(API+'/'+word+'/json', {
+        let rhymesList = await fetch(API + word, {
             method: 'GET',
         }).then(res => {
             status = res.status;
@@ -30,21 +30,16 @@ module.exports = {
         }).catch(err => {
             console.log(err)
         });
-        let synonyms = []
-        for(let i in synonym) {
-            let words = synonym[i].syn
-            console.log("11111" ,words)
-            for(let j = 0; j < Math.min(words.length,3); j++) {
-                console.log("22222",words[j])
-                synonyms.push(words[j].charAt(0).toUpperCase() + words[j].slice(1))
-            }
+        let rhymes = []
+        for (let i = 0; i < Math.min(rhymesList.length,8); i++) {
+            rhymes.push(rhymesList[i].word.charAt(0).toUpperCase() + rhymesList[i].word.slice(1))
         }
-        console.log(synonyms)
+        console.log(rhymes)
         let x = new EmbedBuilder()
             .setColor(0xb411fa)
-            .setTitle("Synonym For " + (word.charAt(0).toUpperCase() + word.slice(1)))
+            .setTitle("Rhymes For " + (word.charAt(0).toUpperCase() + word.slice(1)))
             .addFields(
-                { name: '‣ ' + synonyms.join(' ‣ '), value: '​​​' }
+                { name: '‣ ' + rhymes.join(' ‣ '), value: '​​​' }
             )
             .setTimestamp()
         await interaction.reply({ embeds: [x] });
