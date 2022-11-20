@@ -9,34 +9,27 @@ module.exports = {
         .setDescription('random madlib!')
         ,
     async execute(interaction) {
- 
-
+        
+        let madlib = (text, inputlang, outputlang) => {
+    
+            let status = ''
+            return fetch(API, {
+                method: 'GET',
+            }).then(res => {
+                status = res.status;
+                return res.json();
+            }).then(res => {
+                if (status >= 400 && status <= 600) {
+                    console.log("Error: ", res);
+                } else {
+                    console.log(res);
+                    return res
+                }
+            }).catch(err => {
+                console.log(err)
+            });
+        }
+        
     },
 };
 
-let madlib = (text, inputlang, outputlang) => {
-    
-    let status = ''
-    return fetch(API, {
-        method: 'POST',
-        headers: {
-            'Authorization': 'DeepL-Auth-Key ' + apiKey,
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(params)
-    }).then(res => {
-        status = res.status;
-        return res.json();
-    }).then(res => {
-        if (status >= 400 && status <= 600) {
-            console.log("Error: ", res);
-        } else {
-            console.log(res);
-            return res
-        }
-    }).catch(err => {
-        console.log(err)
-    });
-}
-
-module.exports = { translateTxt };
