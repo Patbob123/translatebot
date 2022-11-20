@@ -1,8 +1,16 @@
 require('dotenv').config()
 const path = require('path')
 const fs = require('fs')
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, ActivityType  } = require('discord.js');
 const client = new Client({
+    presence: {
+        status: 'online',
+        afk: false,
+        activities: [{
+            name: "Your Words",
+            type: ActivityType.Listening
+        }],
+    },
 	intents: [
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages,
@@ -11,6 +19,7 @@ const client = new Client({
 	]
 });
 
+console.log(client)
 
 client.on("message", async (message) => {
 	console.log(message)

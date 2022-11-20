@@ -1,21 +1,21 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const fetch = require('cross-fetch');
-const API = 'https://words.bighugelabs.com/api/2/' + process.env.RHYMEAPI;
+const API = 'https://rhymebrain.com/talk?function=getWordInfo&word=';
 
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('synonym')
-        .setDescription('get synonym for word!')
+        .setName('pronounce')
+        .setDescription('how to pronounce a word!')
         .addStringOption((word) =>
             word.setName('word')
-                .setDescription('Returns a synonym for a given word!')
+                .setDescription('word to pronounce!')
                 .setRequired(true)
         ),
     async execute(interaction) {
         let word = interaction.options.getString('word')
         let status = ''
-        let synonym = await fetch(API+'/'+word+'/json', {
+        let wordinfo = await fetch(API + word, {
             method: 'GET',
         }).then(res => {
             status = res.status;
@@ -30,19 +30,11 @@ module.exports = {
         }).catch(err => {
             console.log(err)
         });
-        let synonyms = []
-        for(let i in synonym) {
-            let words = synonym[i].synonyms
-            for(let j = 0; j < Math.min(words.length,3); j++) {
-                synonyms.push(words[j].charAt(0).toUpperCase() + words[j].slice(1))
-            }
-        }
-        console.log(synonyms)
         let x = new EmbedBuilder()
             .setColor(0xb411fa)
-            .setTitle("Synonym For " + (word.charAt(0).toUpperCase() + word.slice(1)))
+            .setTitle("Rhymes For " + (word.charAt(0).toUpperCase() + word.slice(1)))
             .addFields(
-                { name: '‣ ' + synonyms.join(' ‣ '), value: '​​​' }
+                { name: wordinfo.pron, value: '​​​' }
             )
             .setTimestamp()
         await interaction.reply({ embeds: [x] });
