@@ -1,17 +1,22 @@
+const { SlashCommandBuilder } = require('discord.js');
 const fetch = require('cross-fetch');
-const API = 'https://api-free.deepl.com/v2/translate';
-const apiKey = '85038153-8635-71fb-967d-7e8e2d3ae7fb:fx';
+const API = 'http://madlibz.herokuapp.com/api/random';
 
-let translateTxt = (text, inputlang, outputlang) => {
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('madlib')
+        .setDescription('random madlib!')
+        ,
+    async execute(interaction) {
+ 
+
+    },
+};
+
+let madlib = (text, inputlang, outputlang) => {
     
     let status = ''
-    let params = {
-        'text': text,
-        'target_lang': 'EN'
-    }
-
-    if(inputlang != '') params['source_lang'] = outputlang;
-
     return fetch(API, {
         method: 'POST',
         headers: {
