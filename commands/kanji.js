@@ -36,19 +36,16 @@ module.exports = {
         }).catch(err => {
             console.log(err)
         });
-        await interaction.reply(kanjiinfo.kanji.meaning.english)
-        // if(kanjiinfo.hasOwnProperty('Error')) await interaction.reply('Unknown Word');
-        // let x = new EmbedBuilder()
-        //     .setColor(0xb411fa)
-        //     .setTitle(word)
-        //     // .addFields(
-        //     //     { name: 'English Meaning:', value: kanjiinfo.kanji.meaning.english},
-        //     //     // { name: 'Strokes:', value: kanjiinfo.kanji.strokes},
-        //     //     // { name: '\u200B', value: '\u200B' },
-        //     //     // { name: 'Example:', value: kanjiinfo.examples[0].japanese},
-        //     //     // { name: 'English Meaning:', value: kanjiinfo.examples[0].meaning},
-        //     // )
-        //     .setTimestamp()
-        // await interaction.reply({ embeds: [x] });
+        // await interaction.reply(kanjiinfo.kanji.meaning.english)
+        if(kanjiinfo.hasOwnProperty('Error')) await interaction.reply('Unknown Word');
+        let x = new EmbedBuilder()
+            .setColor(0xb411fa)
+            .setTitle(word)
+            .addFields(
+                { name: 'English Meaning:', value: kanjiinfo.kanji.meaning.english},
+                { name: 'Strokes:', value: kanjiinfo.kanji.strokes.count}
+            )
+            .setTimestamp()
+        await interaction.reply({ embeds: [x] });
     },
 };
