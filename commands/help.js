@@ -6,7 +6,7 @@ module.exports = {
     ,
     async execute(interaction) {
         let x = new EmbedBuilder()
-            .setColor(0x0099FF)
+            .setColor(0xb411fa)
             .setTitle("Commands: /help -  List of Commands!")
             .addFields(
                 { name: '/language', value: 'configure language'},
@@ -16,7 +16,8 @@ module.exports = {
                 { name: '/synonym', value: 'Find synonyms', inline:true},
                 { name: '/define', value: 'Define a word', inline:true},
                 { name: '/pronounce', value: 'How to pronounce a word', inline:true},
-                { name: '/madlib', value: 'Start a madlib, !stop to stop'},
+                { name: '/madlib', value: 'Start a madlib, !stop to stop', inline:true},
+                { name: '/kanji', value: 'Descriptions for a kanji character'},
             )
             .setTimestamp()
         await interaction.reply({ embeds: [x] });
