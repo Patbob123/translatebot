@@ -29,6 +29,7 @@ module.exports = {
         "chinese":"ZH",
     },
     "abbreviations": [
+        "DEFAULT",
         "BG",
         "CS",
         "DA",
