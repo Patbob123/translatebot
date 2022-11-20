@@ -25,7 +25,8 @@ module.exports = {
         if (!channelConfig[serverid.toString()].includes(channelid) || !userconfig[0]) return
 
         let content = client.content
-
+        if(content == null || content == '') return;
+        
         translateTxt(content, userconfig[1], userconfig[2]).then(async res => {
             if (userconfig[1] == '') userconfig[1] = 'Default'
             let embed = new EmbedBuilder()
