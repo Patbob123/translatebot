@@ -28,13 +28,13 @@ module.exports = {
             return res.json();
         }).then(res => {
             if (status >= 400 && status <= 600) {
-                console.log("Error: ", res);
+                //console.log("Error: ", res);
             } else {
                 console.log(res);
                 return res
             }
         }).catch(err => {
-            console.log(err)
+            //console.log(err)
         });
         // await interaction.reply(kanjiinfo.kanji.meaning.english)
         if(kanjiinfo.hasOwnProperty('Error')) await interaction.reply('Unknown Word');
@@ -43,7 +43,7 @@ module.exports = {
             .setTitle(word)
             .addFields(
                 { name: 'English Meaning:', value: kanjiinfo.kanji.meaning.english},
-                { name: 'Strokes:', value: kanjiinfo.kanji.strokes.count}
+                { name: 'Strokes:', value: kanjiinfo.kanji.strokes.count.toString()},
             )
             .setTimestamp()
         await interaction.reply({ embeds: [x] });

@@ -41,6 +41,11 @@ module.exports = {
         let x = new EmbedBuilder()
             .setColor(0xb411fa)
             .setTitle("Don't like your sentence? Try this:")
+            .addFields(
+                { name: 'Input', value: paraphrasedSentences.input},
+                { name: 'Language', value: paraphrasedSentences.language},
+                
+            )
             .setDescription(paraphrasedSentences.output)
             .setTimestamp()
         await interaction.reply({ embeds: [x] });
