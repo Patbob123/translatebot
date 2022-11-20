@@ -5,13 +5,10 @@ const path = require('path')
 const userConfigName = '../config/userConfig.json';
 const channelConfigName = '../config/channelConfig.json';
 
-let userConfig = JSON.parse(fs.readFileSync(path.join(__dirname,userConfigName), 'utf8'))
-let channelConfig = JSON.parse(fs.readFileSync(path.join(__dirname,channelConfigName), 'utf8'))
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('toggle')
-        .setDescription('Toggle On/Off')
+        .setDescription('Toggle Channel or User On/Off')
         .addStringOption((type) =>
             type.setName('type')
                 .setDescription('User or Channel')
@@ -27,6 +24,9 @@ module.exports = {
         );
     },
     async execute(interaction) {
+        let userConfig = JSON.parse(fs.readFileSync(path.join(__dirname,userConfigName), 'utf8'))
+        let channelConfig = JSON.parse(fs.readFileSync(path.join(__dirname,channelConfigName), 'utf8'))
+        
         let type = interaction.options.getString('type').toLowerCase();
         let user = interaction.member.id;
         let channel = interaction.channel.id;
@@ -53,6 +53,7 @@ module.exports = {
                     } else {
                         channelConfig[server].push(channel);
                     }
+                    toggled = !toggled
                 } else {
                     channelConfig[server] = [channel];
                 }
