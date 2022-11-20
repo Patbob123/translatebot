@@ -7,14 +7,16 @@ module.exports = {
     async execute(interaction) {
         let x = new EmbedBuilder()
             .setColor(0x0099FF)
-            .setTitle("Commands")
+            .setTitle("Commands: /help -  List of Commands!")
             .addFields(
-                { name: '/help', value: 'help' },
                 { name: '/language', value: 'configure language'},
-                { name: '/toggle', value: 'toggle translator'},
-                { name: '/madlib', value: 'start a madlib'},
-                { name: '/rhyme', value: 'find rhyming words'},
-                { name: '/synonyms', value: 'find synonyms'},
+                { name: '/toggle', value: 'Toggle translator to translate USER or CHANNEL', inline:true},
+                { name: '/status', value: 'Displays current toggle status', inline:true},
+                { name: '/rhyme', value: 'Find rhyming words', inline: true},
+                { name: '/synonym', value: 'Find synonyms', inline:true},
+                { name: '/define', value: 'Define a word', inline:true},
+                { name: '/pronounce', value: 'How to pronounce a word', inline:true},
+                { name: '/madlib', value: 'Start a madlib'},
             )
             .setTimestamp()
         await interaction.reply({ embeds: [x] });

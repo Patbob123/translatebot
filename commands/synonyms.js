@@ -1,6 +1,6 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const fetch = require('cross-fetch');
-const API = 'https://words.bighugelabs.com/api/2/' + '7e6c456cd4c60603c72f98e6747d3f5c';
+const API = 'https://words.bighugelabs.com/api/2/' + process.env.RHYMEAPI;
 
 
 module.exports = {
@@ -32,10 +32,8 @@ module.exports = {
         });
         let synonyms = []
         for(let i in synonym) {
-            let words = synonym[i].syn
-            console.log("11111" ,words)
+            let words = synonym[i].synonyms
             for(let j = 0; j < Math.min(words.length,3); j++) {
-                console.log("22222",words[j])
                 synonyms.push(words[j].charAt(0).toUpperCase() + words[j].slice(1))
             }
         }

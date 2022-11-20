@@ -1,7 +1,7 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const fetch = require('cross-fetch');
 const API = 'https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=';
-
+require('dotenv').config()
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,7 +18,7 @@ module.exports = {
         let definitionList = await fetch(API + word, {
             method: 'GET',
             headers: {
-              'X-RapidAPI-Key': '650b7fbcd8msh145b07c1ea880fap185b06jsn478be38f5753',
+              'X-RapidAPI-Key': process.env.RAPIDAPIKEY,
               'X-RapidAPI-Host': 'mashape-community-urban-dictionary.p.rapidapi.com'
             }
         }).then(res => {
